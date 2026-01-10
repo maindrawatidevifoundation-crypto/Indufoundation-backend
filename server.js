@@ -47,3 +47,20 @@ app.listen(5000, () => {
   console.log("Backend running on port 5000");
 });
 mongodb+srv://Maindrawatidevifoundation:<db_password>@cluster0.wql8whp.mongodb.net/?appName=Cluster0
+npm install mongoose
+const mongoose = require('mongoose');
+
+const uri = "mongodb+srv://Maindrawatidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/ngoDB?retryWrites=true&w=majority";
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch(err => console.error("MongoDB connection error:", err));
+const mongoose = require('mongoose');
+
+const uri = "mongodb+srv://Maindrawatidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/ngoDB?retryWrites=true&w=majority";
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch(err => console.error("MongoDB connection error:", err));
+         
+                                                         
