@@ -46,3 +46,4 @@ app.get("/members", async (req, res) => {
 app.listen(5000, () => {
   console.log("Backend running on port 5000");
 });
+mongodb+srv://Maindrawatidevifoundation:<db_password>@cluster0.wql8whp.mongodb.net/?appName=Cluster0
