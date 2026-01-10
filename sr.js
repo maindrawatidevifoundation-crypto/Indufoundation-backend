@@ -1,4 +1,4 @@
-mongodb+srv://Maindrawatidevifoundation:<db_password>@cluster0.yos8jrt.mongodb.net/?appName=Cluster0
+mongodb+srv://Maindrawatidevifoundation:<Munukaushik>@cluster0.yos8jrt.mongodb.net/?appName=Cluster0
 const { MongoClient } = require('mongodb');
 
 const uri = "mongodb+srv://Maindrawatidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/myDatabase?retryWrites=true&w=majority";
