@@ -57,10 +57,3 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.error("MongoDB connection error:", err));
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://Maindrawatidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/ngoDB?retryWrites=true&w=majority";
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch(err => console.error("MongoDB connection error:", err));
-         
-                                                         
