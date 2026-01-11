@@ -81,3 +81,9 @@ async function run() {
 
 run().catch(console.dir);
     
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("Backend running on port " + PORT);
+});
+require("dotenv").config();
