@@ -50,7 +50,7 @@ mongodb+srv://Maindrawatidevifoundation:<db_password>@cluster0.wql8whp.mongodb.n
 npm install mongoose
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://Maindrawatidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/ngoDB?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Maindrawatidevifoundation:<db_password>@cluster0.wql8whp.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected successfully"))
