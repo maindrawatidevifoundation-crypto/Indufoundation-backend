@@ -1,1 +1,3 @@
-npm install dotenv
+npm install
+node server.js
+
