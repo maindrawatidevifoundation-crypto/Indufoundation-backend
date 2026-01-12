@@ -5,43 +5,46 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
+
+// ================== Middlewares ==================
 app.use(cors());
 app.use(express.json());
 
 // ================== MongoDB Connection ==================
-mongoose.connect(process.env.MONGODB_URI)
+mongoose
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ MongoDB Error:", err));
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err.message));
 
 // ================== Member Schema ==================
 const memberSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   mobile: {
     type: String,
-    required: true
+    required: true,
   },
   interest: {
     type: String,
-    required: true
+    required: true,
   },
   memberId: {
     type: String,
-    unique: true
+    unique: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const Member = mongoose.model("Member", memberSchema);
 
-// ================== APIs ==================
+// ================== Routes ==================
 
-// Health check
+// Health Check
 app.get("/", (req, res) => {
   res.send("NGO Backend is Running ✅");
 });
@@ -52,7 +55,10 @@ app.post("/join", async (req, res) => {
     const { name, mobile, interest } = req.body;
 
     if (!name || !mobile || !interest) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
     }
 
     const count = await Member.countDocuments();
@@ -62,7 +68,7 @@ app.post("/join", async (req, res) => {
       name,
       mobile,
       interest,
-      memberId
+      memberId,
     });
 
     await newMember.save();
@@ -70,11 +76,13 @@ app.post("/join", async (req, res) => {
     res.json({
       success: true,
       message: "Member joined successfully",
-      memberId
+      memberId,
     });
-
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 });
 
@@ -93,4 +101,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-mongoose.connect(process.env.MONGODB_URI)
