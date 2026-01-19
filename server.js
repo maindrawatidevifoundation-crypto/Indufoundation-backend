@@ -1,9 +1,11 @@
+// server.js
 require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// ================== App Initialization ==================
 const app = express();
 
 // ================== Middlewares ==================
@@ -12,35 +14,32 @@ app.use(express.json());
 
 // ================== MongoDB Connection ==================
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err.message));
 
-// ================== Member Schema ==================
+// ================== Member Schema & Model ==================
 const memberSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  mobile: {
-    type: String,
-    required: true,
-  },
-  interest: {
-    type: String,
-    required: true,
-  },
-  memberId: {
-    type: String,
-    unique: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  name: { type: String, required: true },
+  mobile: { type: String, required: true },
+  interest: { type: String, required: true },
+  memberId: { type: String, unique: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Member = mongoose.model("Member", memberSchema);
+
+// ================== Activity Schema & Model ==================
+const activitySchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  date: { type: Date, default: Date.now },
+});
+
+const Activity = mongoose.model("Activity", activitySchema);
 
 // ================== Routes ==================
 
@@ -48,6 +47,8 @@ const Member = mongoose.model("Member", memberSchema);
 app.get("/", (req, res) => {
   res.send("NGO Backend is Running ✅");
 });
+
+// ====== Members Routes ======
 
 // Join NGO (POST)
 app.post("/join", async (req, res) => {
@@ -96,19 +97,37 @@ app.get("/members", async (req, res) => {
   }
 });
 
-// ================== Server ==================
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-const Activity = require("./models/Activity");
+// ====== Activities Routes ======
 
+// Get all activities (GET)
 app.get("/activities", async (req, res) => {
   try {
-    const activities = await Activity.find();
+    const activities = await Activity.find().sort({ date: -1 });
     res.json(activities);
   } catch (error) {
     res.status(500).json({ message: "Error fetching activities" });
   }
+});
+
+// Add new activity (POST) - optional, future use
+app.post("/activities", async (req, res) => {
+  try {
+    const { title, description, date } = req.body;
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    const newActivity = new Activity({ title, description, date });
+    await newActivity.save();
+    res.json({ success: true, message: "Activity added successfully", activity: newActivity });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// ================== Server ==================
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
   
