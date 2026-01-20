@@ -13,8 +13,12 @@ const activitySchema = new mongoose.Schema({
     type: String
   }
 });
+module.exports = mongoose.model(
+  "Activity",
+  activitySchema,
+  "Activities"
+);
 
-module.exports = mongoose.model("Activity", activitySchema);
 const express = require("express");
 const router = express.Router();
 const Activity = require("../models/activity"); // path check
