@@ -21,12 +21,12 @@ module.exports = mongoose.model(
 
 const express = require("express");
 const router = express.Router();
-const Activity = require("../models/activity"); // path check
+const Activity = require("../models/Activities"); // path check
 
 router.get("/", async (req, res) => {
   try {
-    const activities = await Activity.find();
-    res.json(activities);
+    const Activities = await Activity.find();
+    res.json(Activities);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
