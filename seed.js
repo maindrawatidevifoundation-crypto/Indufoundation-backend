@@ -1,10 +1,10 @@
 // seed.js
 const mongoose = require("mongoose");
 
-// MongoDB connection string (password set)
+// 🔑 Use your actual password in URL
 const MONGO_URL = "mongodb+srv://Maindrawtidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/indufoundation?retryWrites=true&w=majority";
 
-// Member schema
+// Schema
 const memberSchema = new mongoose.Schema({
   name: String,
   mobile: String,
@@ -15,7 +15,7 @@ const memberSchema = new mongoose.Schema({
 
 const Member = mongoose.model("Member", memberSchema);
 
-// Members data to insert
+// 7 Key members
 const membersData = [
   { name: "Sanjay Sarpanch", mobile: "N/A", interest: "Secretary", memberId: "SEC0012026", createdAt: new Date() },
   { name: "Rajesh Attri", mobile: "N/A", interest: "Volunteer Coordinator", memberId: "VOL0012026", createdAt: new Date() },
@@ -26,16 +26,15 @@ const membersData = [
   { name: "Suresh Sharma", mobile: "N/A", interest: "Communication & Fundraising Coordinator", memberId: "COM0012026", createdAt: new Date() }
 ];
 
-// Connect to MongoDB, delete old Test User, then insert new members
 mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log("MongoDB Connected ✅");
 
-    // Delete Test User
-    await Member.deleteMany({ name: "Test user" });
-    console.log("Old Test User deleted ✅");
+    // Delete old members (including Test User)
+    await Member.deleteMany({});
+    console.log("Old members deleted ✅");
 
-    // Insert new members
+    // Insert key members
     const result = await Member.insertMany(membersData);
     console.log(`Inserted ${result.length} members ✅`);
 
