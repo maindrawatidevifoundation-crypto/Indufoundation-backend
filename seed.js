@@ -1,10 +1,10 @@
 // seed.js
 const mongoose = require("mongoose");
 
-// 1️⃣ MongoDB URL (replace <db_password> with actual password)
-const MONGO_URL = "mongodb+srv://Maindrawtidevifoundation:<db_password>@cluster0.yos8jrt.mongodb.net/indufoundation?retryWrites=true&w=majority";
+// 1️⃣ MongoDB URL (password set)
+const MONGO_URL = "mongodb+srv://Maindrawtidevifoundation:Munukaushik@cluster0.yos8jrt.mongodb.net/indufoundation?retryWrites=true&w=majority";
 
-// 2️⃣ Define Member schema (same as backend)
+// 2️⃣ Define Member schema
 const memberSchema = new mongoose.Schema({
   name: String,
   mobile: String,
@@ -31,7 +31,7 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log("MongoDB Connected ✅");
 
-    // Optional: remove old test members (comment if not needed)
+    // Optional: remove old test members if you want
     // await Member.deleteMany({ memberId: { $regex: /2026$/ } });
 
     // Insert members
