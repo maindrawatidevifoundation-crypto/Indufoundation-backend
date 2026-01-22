@@ -26,7 +26,7 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log("MongoDB Connected ✅");
 
-    // Delete old test user
+    // Delete old Test user
     await Member.deleteOne({ memberId: "MIDNSF-2026-1" });
 
     const result = await Member.insertMany(membersData);
