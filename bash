@@ -1,3 +1,4 @@
+cd indufoundation-backend
 npm install
 node server.js
 npm install node-fetch@2
