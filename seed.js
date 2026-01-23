@@ -1,16 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const MONGO_URL = process.env.MONGODB_URI; // Use env variable
+const Member = require("./models/Member"); // ✅ SAME MODEL
 
-const memberSchema = new mongoose.Schema({
-  name: String,
-  mobile: String,
-  interest: String,
-  memberId: String,
-  createdAt: { type: Date, default: Date.now }
-});
-
-const Member = mongoose.model("Member", memberSchema);
+const MONGO_URL = process.env.MONGODB_URI;
 
 const membersData = [
   { name: "Sanjay Sarpanch", mobile: "N/A", interest: "Secretary", memberId: "SEC0012026" },
@@ -22,14 +15,17 @@ const membersData = [
   { name: "Suresh Sharma", mobile: "N/A", interest: "Communication & Fundraising Coordinator", memberId: "COM0012026" }
 ];
 
-mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URL)
   .then(async () => {
     console.log("MongoDB Connected ✅");
 
-    await Member.deleteMany({}); // Delete old data if any
-
+    await Member.deleteMany({});
     const result = await Member.insertMany(membersData);
+
     console.log(`Inserted ${result.length} members ✅`);
-    mongoose.disconnect();
+    process.exit();
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
