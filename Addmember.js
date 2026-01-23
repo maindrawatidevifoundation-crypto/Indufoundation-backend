@@ -34,3 +34,40 @@ async function addMembers() {
 }
 
 addMembers();
+const express = require("express");
+const router = express.Router();
+const Member = require("../models/Member"); // path check karo
+
+router.post("/join", async (req, res) => {
+  try {
+    const rolePrefix = {
+      "Secretary": "SEC",
+      "Volunteer Coordinator": "VOL",
+      "Treasurer/Finance": "TRE",
+      "Field Operations Manager": "FOM",
+      "Technical Coordinator": "TEC",
+      "Monitoring & Evaluation Officer": "MEO",
+      "Communication & Fundraising Coordinator": "COM"
+    };
+
+    const prefix = rolePrefix[req.body.interest] || "GEN";
+    const uniqueNumber = Date.now().toString().slice(-4); // last 4 digits of timestamp
+    const memberId = `${prefix}${uniqueNumber}2026`;
+
+    const newMember = new Member({
+      name: req.body.name,
+      mobile: req.body.mobile,
+      interest: req.body.interest,
+      memberId: memberId
+    });
+
+    const savedMember = await newMember.save();
+    res.status(201).json(savedMember);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+module.exports = router;
+      
