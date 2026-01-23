@@ -1,7 +1,7 @@
+// seed.js
 const mongoose = require("mongoose");
 require("dotenv").config();
-
-const Member = require("./models/Member");
+const Member = require("./member");
 
 const MONGO_URL = process.env.MONGODB_URI;
 
@@ -28,6 +28,6 @@ mongoose.connect(MONGO_URL)
     process.exit();
   })
   .catch(err => {
-    console.error("Error:", err);
+    console.error(err);
     process.exit(1);
   });
