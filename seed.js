@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const Member = require("./models/Member"); // ✅ SAME MODEL
+const Member = require("./models/Member");
 
 const MONGO_URL = process.env.MONGODB_URI;
 
@@ -22,10 +22,12 @@ mongoose.connect(MONGO_URL)
     await Member.deleteMany({});
     const result = await Member.insertMany(membersData);
 
-    console.log(`Inserted ${result.length} members ✅`);
+    console.log("Inserted members:");
+    result.forEach(m => console.log(m.name, "-", m.memberId));
+
     process.exit();
   })
   .catch(err => {
-    console.error(err);
+    console.error("Error:", err);
     process.exit(1);
   });
