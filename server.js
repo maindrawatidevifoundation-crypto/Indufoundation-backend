@@ -132,3 +132,4 @@ app.listen(PORT, () => {
 });
   
               
+app.use("/api/activities", require("./routes/activities"));
